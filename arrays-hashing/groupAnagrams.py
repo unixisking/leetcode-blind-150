@@ -1,35 +1,17 @@
 # https://leetcode.com/problems/group-anagrams/
 
+from collections import defaultdict
 from typing import List
 
+# HashMap(List(8,7) -> List(word1, word3))
 class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
-            return False
-        sSet = set(s)
-        for char in sSet:
-            if s.count(char) != t.count(char):
-                return False
-        return True
-
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        result = []
-        n = len(strs)
+        result = defaultdict(list)
+        for word in strs:
+            count = [0] * 26
 
-        for i in range(n):
-            firstWord = strs[i]
-            isIncluded = False
-            for x in range(len(result)):
-                if firstWord in result[x]:
-                    isIncluded = True
-
-            if isIncluded == False:
-                tmp = []
-                for j in range(i+1, n):
-                    secondWord = strs[j]
-                    if self.isAnagram(firstWord, secondWord):
-                        tmp.append(secondWord)
-                tmp.append(firstWord)
-                result.append(tmp)
-
-        return result
+            for char in word:
+                count[ord(char) - ord('a')] += 1
+            
+            result[tuple(count)].append(word)
+        return result.values()
