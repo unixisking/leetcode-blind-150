@@ -15,7 +15,6 @@ class Solution:
         return result + chr(0)
 
     def decode(self, s: str) -> List[str]:
-        print(s)
         if s == 2*chr(0):
             return [""]
         result = []
