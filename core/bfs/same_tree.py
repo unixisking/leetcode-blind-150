@@ -1,8 +1,10 @@
 # 100. Same Tree https://leetcode.com/problems/same-tree/description/?envType=problem-list-v2&envId=breadth-first-search
 
 from typing import Optional
+from queue import Queue
 
 # Definition for a binary tree node.
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -12,6 +14,29 @@ class TreeNode:
 
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        return False
+        q1, q2 = Queue(), Queue()
+        if p is None and q is None:
+            return True
+        if ((p is None) ^ (q is None)):
+            return False
+        q1.put(p)
+        q2.put(q)
+        while q1.empty() == False and q2.empty() == False:
+            node1 = q1.get()
+            node2 = q2.get()
 
-        
+            if node1.val != node2.val:
+                return False
+            if (node1.left is None) ^ (node2.left is None):
+                return False
+            if (node1.right is None) ^ (node2.right is None):
+                return False
+
+            if node1.left:
+                q1.put(node1.left)
+                q2.put(node2.left)
+            if node1.right:
+                q1.put(node1.right)
+                q2.put(node2.right)
+
+        return True
