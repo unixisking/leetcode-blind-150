@@ -15,9 +15,9 @@ class TreeNode:
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         q1, q2 = Queue(), Queue()
-        if p is None and q is None:
+        if not p and not q:
             return True
-        if ((p is None) ^ (q is None)):
+        if ((not p) ^ (not q)):
             return False
         q1.put(p)
         q2.put(q)
@@ -27,9 +27,9 @@ class Solution:
 
             if node1.val != node2.val:
                 return False
-            if (node1.left is None) ^ (node2.left is None):
+            if (not node1.left) ^ (not node2.left):
                 return False
-            if (node1.right is None) ^ (node2.right is None):
+            if (not node1.right) ^ (not node2.right):
                 return False
 
             if node1.left:
