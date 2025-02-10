@@ -1,7 +1,6 @@
 # 102. Binary Tree Level Order Traversal https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 
-from typing import Optional, List, Dict
-from collections import defaultdict
+from typing import Optional, List
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -9,18 +8,25 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        def traverse(node: Optional[TreeNode], level: int, output: Dict[int, List[int]]) -> List[List[int]]:
+        res = []
+        def dfs(node: Optional[TreeNode], depth: int):
             if not node:
-                return output
-            output[level].append(node.val)
-            output = traverse(node.left, level + 1, output)
-            return traverse(node.right, level + 1, output)
+                return None
+            if depth == len(res):
+                res.append([])
             
+            res[depth].append(node.val)
+            dfs(node.left, depth + 1)
+            dfs(node.right, depth + 1)
+        
+        dfs(root, 0)
+        return res
 
-        result = traverse(root, 0, defaultdict(list))
-        return [nodes for nodes in result.values()]
+
+        
 
 
 
